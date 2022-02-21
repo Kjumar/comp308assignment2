@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 //
 import Home from './components/Home';
+import Login from './components/Login';
 
 
 import CreateStudent from './components/CreateStudent';
@@ -28,6 +29,7 @@ function App() {
 
       <div>
         <Route render ={()=> < Home />} path="/home" />
+          <Route render ={()=> < Login />} path="/login" />
         <Route render ={()=> < CreateStudent />} path="/create" />
         <Route render ={()=> < ShowStudent />} path="/show/:id" />
       </div>

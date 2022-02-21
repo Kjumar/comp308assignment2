@@ -6,7 +6,7 @@ var router = express.Router();
 module.exports = function (app) {
     // handle a get request made to /students path
     // and list students when /students link is selected
-    app.get("/students",students.list); //go to http://localhost:5000/students to see the list
+    app.get("/students",students.requiresLogin,students.list); //go to http://localhost:5000/students to see the list
     //handle a post request made to root path
     app.post('/', students.create);
     //
@@ -20,11 +20,11 @@ module.exports = function (app) {
     //any route in which the param occurs, and they will each 
     //be called only once in a request - response cycle, 
     //even if the parameter is matched in multiple routes
-    app.param('userId', students.studentByID);
+    app.param('studentID', students.studentByID);
     //authenticate user
-    //app.post('/signin', students.authenticate);
-    //app.get('/signout', students.signout);
-    //app.get('/read_cookie', students.isSignedIn);
+    app.post('/signin', students.authenticate);
+    app.get('/signout', students.signout);
+    app.get('/read_cookie', students.isSignedIn);
 
 
     //path to a protected page

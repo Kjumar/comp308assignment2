@@ -6,9 +6,27 @@ const Schema = mongoose.Schema;
 
 // some of these fields need proper types/validation (like the password field)
 var StudentSchema = new Schema({
-    studentNumber: String,
-    firstName: String,
-    lastName: String,
+    studentNumber: {
+        type: Number,
+        unique: true,
+        required: 'Student number is required'
+    },
+    firstName: {
+        type: String,
+        validate: [
+            (name) => name && name.length >= 1,
+            'First name is required'
+        ],
+        trim: true
+    },
+    lastName: {
+        type: String,
+        validate: [
+            (name) => name && name.length >= 1,
+            'Last name is required'
+        ],
+        trim: true
+    },
     address: String,
     city: String,
     phoneNumber: String,
