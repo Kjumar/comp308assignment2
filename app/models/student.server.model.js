@@ -29,8 +29,17 @@ var StudentSchema = new Schema({
     },
     address: String,
     city: String,
-    phoneNumber: String,
-    email: String,
+    phoneNumber: {
+        type: Number,
+        validate:[
+            (phoneNumber) => phoneNumber && phoneNumber.length == 10,
+            'There must be 10 digits in Phone number'
+        ]
+    },
+    email: {
+        type: String,
+        match: [/.+\@.+\..+/, "Please fill a valid email address"]
+    },
     password: {
         type: String,
         validate: [
