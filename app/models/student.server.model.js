@@ -32,7 +32,7 @@ var StudentSchema = new Schema({
     phoneNumber: {
         type: Number,
         validate:[
-            (phoneNumber) => phoneNumber && phoneNumber.length == 10,
+            (phoneNumber) => phoneNumber && (phoneNumber.toString()).length >= 10,
             'There must be 10 digits in Phone number'
         ]
     },
@@ -46,7 +46,12 @@ var StudentSchema = new Schema({
             (password) => password && password.length >= 6,
             'Password must contain at least 6 characters'
         ]
-    }
+    },
+    // reference to courses
+    courses: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Course'
+    }]
 });
 
 // Set the 'fullname' virtual property
