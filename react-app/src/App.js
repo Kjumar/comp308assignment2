@@ -7,10 +7,13 @@ import './App.css';
 //
 import Home from './components/Home';
 import Login from './components/Login';
-
-
+import ListStudents from './components/ListStudents';
+//
 import CreateStudent from './components/CreateStudent';
 import ShowStudent from './components/ShowStudent';
+import EditStudent from './components/EditStudent';
+//
+import ShowCourse from './components/ShowCourse';
 
 function App() {
   return (
@@ -29,9 +32,12 @@ function App() {
 
       <div>
         <Route render ={()=> < Home />} path="/home" />
-          <Route render ={()=> < Login />} path="/login" />
+        <Route render ={()=> < Login />} path="/login" />
+        <Route render ={()=> < ListStudents />} path="/list" />
         <Route render ={()=> < CreateStudent />} path="/create" />
         <Route render ={()=> < ShowStudent />} path="/show/:id" />
+        <Route render ={()=> < EditStudent />} path="/edit/:id" />
+        <Route render ={()=> < ShowCourse />} path="/showcourse/:id" />
       </div>
     </Router>
   );

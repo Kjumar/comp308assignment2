@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {Spinner, Jumbotron, Form, Button} from 'react-bootstrap';
-import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
 function EditStudent(props) {
     const [student, setStudent] = useState({ _id: '', firstName: '', lastName: '', 
                 address: '', city: '', phoneNumber: '', email: '',password: '' });  
     const [showLoading, setShowLoading] = useState(true);
-    const apiUrl = "http://localhost:5000/users/" + props.match.params.id;
+    const apiUrl = "http://localhost:5000/students/" + props.match.params.id;
 
     //runs only once after the first render
     useEffect(() => {
@@ -24,7 +23,7 @@ function EditStudent(props) {
       fetchData();
     }, []);
   
-    const updateUser = (e) => {
+    const updateStudent = (e) => {
       setShowLoading(true);
       e.preventDefault();
       const data = { studentNumber: student.studentNumber, firstName: student.firstName, lastName: student.lastName, 
@@ -36,10 +35,10 @@ function EditStudent(props) {
           props.history.push('/show/' + result.data._id)
         }).catch((error) => setShowLoading(false));
     };
-    //runs when user enters a field
+    //runs when student enters a field
     const onChange = (e) => {
       e.persist();
-      setStudent({...user, [e.target.name]: e.target.value});
+      setStudent({...student, [e.target.name]: e.target.value});
     }
   
     return (
@@ -50,7 +49,7 @@ function EditStudent(props) {
           </Spinner> 
         } 
         <Jumbotron>
-          <Form onSubmit={updateUser}>
+          <Form onSubmit={updateStudent}>
           <Form.Group>
             <Form.Label>Student Number</Form.Label>
             <Form.Control type="text" name="studentNumber" id="email" rows="3" placeholder="Enter student number" value={student.studentNumber} onChange={onChange} />
