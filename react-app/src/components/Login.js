@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 //import ReactDOM from 'react-dom';
-import {Jumbotron, Form, Button} from 'react-bootstrap/Jumbotron';
+import {Jumbotron, Form, Button, Container, FormGroup} from 'react-bootstrap';
 import axios from 'axios';
 //
 function App() {
@@ -59,17 +59,22 @@ function App() {
     return (
       <div className="App">
         {screen === 'auth' 
-          ? <div>
-            <label>Username: </label>
-            <br/>
-            <input type="text" onChange={e => setStudentNumber(e.target.value)} />
-            <br/>
-            <label>Password: </label>
-            <br/>
-            <input type="password" onChange={e => setPassword(e.target.value)} />
-            <br/>
-            <button onClick={auth}>Login</button>
-          </div>
+          ?
+              <Form>
+              <Container>
+              <h1 class="mt-3">Please Log In</h1>
+                <Form.Group className='mb-3'>
+                    <Form.Label>Student Number:</Form.Label>
+                    <Form.Control type="text" placeholder='something@mail.com' onChange={e => setStudentNumber(e.target.value)}/>
+                </Form.Group>
+                <Form.Group className='mb-3'>
+                    <Form.Label>Password: </Form.Label>
+                    <Form.Control type="password" onChange={e => setPassword(e.target.value)}/>
+                </Form.Group>
+              <Button type="submit" onClick={auth}>Login</Button>
+              </Container>
+              </Form>
+           
           : <div>
               <p>You are logged in!</p>
               <p>this part should use a different component to render a page and display courses</p>
