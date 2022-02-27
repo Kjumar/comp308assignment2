@@ -132,15 +132,43 @@ exports.addCourse = function(req, res) {
 };
 
 exports.listAddedCourses = function(req, res) {
-    const student = req.student;
+    const studentNumber = req.body.studentNumber;
 
-    Student.findById(student._id).populate('courses').exec((err, courses) => {
+    Student.findOne({studentNumber: studentNumber}).populate('courses').exec((err, courses) => {
         if (err) {
             return res.status(400).send({
                 message: getErrorMessage(err)
             });
         } else {
-            res.status(200).json(courses);
+            res.status(200).json(courses.courses);
         }
+    });
+}
+
+exports.removeCourse = function(req, res) {
+    const courseId = req.body.courseId;
+    const studentNumber = req.body.studentNumber;
+
+    Student.findOne({studentNumber: studentNumber}).populate('courses').exec((err, student) => {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        }
+        console.log(student.courses);
+        const newCourses = student.courses.filter( (course) => course._id != courseId);
+        console.log(newCourses);
+
+        Student.findOneAndUpdate({studentNumber: studentNumber},
+            {courses: newCourses}, (err, student) => {
+                if (err) {
+                    return res.status(400).send({
+                        message: getErrorMessage(err)
+                    });
+                } else {
+                    res.status(200).json(student);
+                }
+        });
     });
 }

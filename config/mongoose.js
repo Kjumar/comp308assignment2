@@ -5,7 +5,8 @@ module.exports = function () {
     // Use Mongoose to connect to MongoDB
     const db = mongoose.connect(config.db, {
 		useUnifiedTopology: true,
-		useNewUrlParser: true, useCreateIndex: true 
+		useNewUrlParser: true, useCreateIndex: true,
+    useFindAndModify: false 
 		}).then(() => console.log('DB Connected!'))
 		.catch(err => {
 		console.log('Error: failed to connect to database');
