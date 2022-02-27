@@ -11,5 +11,10 @@ module.exports = function(app) {
         .put(students.requiresLogin, courses.update)
         .delete(students.requiresLogin, courses.delete);
     //
+    app.route('/api/addcourse')
+        .get(students.requiresLogin, courses.listAddedCourses)
+        .put(students.requiresLogin, courses.addCourse);
+    //
     app.param('courseId', courses.courseById);
+    //app.param('studentId', students.studentByID);
 };

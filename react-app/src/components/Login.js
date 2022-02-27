@@ -23,6 +23,7 @@ function App() {
       //call api
       const res = await axios.post(apiUrl, loginData);
       //process the response
+      console.log(res.data);
       if (res.data.screen !== undefined) {
         setScreen(res.data.screen);
         setName(res.data.name);

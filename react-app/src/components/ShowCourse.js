@@ -5,9 +5,25 @@ import { withRouter } from 'react-router-dom';
 
 function ShowCourse(props) {
   console.log('props.match.params',props.match.params.id)
+  const [screen, setScreen] = useState('auth');
   const [data, setData] = useState({});
   const [showLoading, setShowLoading] = useState(true);
-  const apiUrl = "http://localhost:5000/api/courses/" + props.match.params.id;
+  const apiUrl = "http://localhost:3000/api/courses/" + props.match.params.id;
+
+  //check if the user already logged-in
+  const readCookie = async () => {
+    axios.get('/read_cookie')
+      .then(result => {
+        //check if the user has logged in
+        if(result.data.screen !== 'auth')
+        {
+          setScreen(result.data.screen);
+        }
+      }).catch((error) => {
+        console.log(error);
+        setScreen('auth');
+      });
+  };
 
   useEffect(() => {
     setShowLoading(false);
@@ -20,6 +36,7 @@ function ShowCourse(props) {
     };
 
     fetchData();
+    readCookie();
   }, [apiUrl]);
 
   const editCourse = (id) => {
@@ -39,6 +56,21 @@ function ShowCourse(props) {
       }).catch((error) => setShowLoading(false));
   };
 
+  const addCourse = (id) => {
+    setShowLoading(true);
+
+    const student = { studentNumber: screen };
+    const course = { _id: id, courseCode: data.courseCode, courseName: data.courseName, section: data.section, semester: data.semester };
+
+    axios.put('/api/addcourse', {course: course, student: student})
+      .then((result) => {
+        setShowLoading(true);
+        props.history.push('/courses');
+      }).catch((err) => {
+        setShowLoading(false);
+      });
+  }
+
   return (
     <div>
       {showLoading && <Spinner animation="border" role="status">
@@ -50,6 +82,12 @@ function ShowCourse(props) {
 
         <p>
           <Button type="button" variant="primary" onClick={() => { editCourse(data._id) }}>Edit</Button>&nbsp;
+          {screen !== 'auth'
+            ?
+            <Button type="button" variant="primary" onClick={() => { addCourse(data._id) }}>Enrol</Button>
+            :
+            <Button disabled type="button" variant="primary" onClick={() => { addCourse(data._id) }}>Enrol</Button>
+          }&nbsp;
           <Button type="button" variant="danger" onClick={() => { deleteCourse(data._id) }}>Delete</Button>
         </p>
         

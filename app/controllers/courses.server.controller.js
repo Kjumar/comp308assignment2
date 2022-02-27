@@ -71,7 +71,7 @@ exports.listSections = function(req, res) {
         } else {
             res.status(200).json(courses);
         }
-    })
+    });
 }
 
 exports.update = function(req, res) {
@@ -104,3 +104,43 @@ exports.delete = function (req, res) {
         }
     });
 };
+
+exports.addCourse = function(req, res) {
+    const course = req.body.course;
+    const student = req.body.student;
+
+    Student.findOne({studentNumber: student.studentNumber}).exec((err, student) => {
+        if (err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        }
+        // ==========================================================================================
+        // USING SAVE WILL REHASH THE PASSWORD... USE UPDATE INSTEAD TO ONLY CHANGE THE COURSES FIELD
+        // ==========================================================================================
+        Student.findOneAndUpdate({_id: student._id},
+            {courses: [...student.courses, course._id]}, (err, student) => {
+                if (err) {
+                    return res.status(400).send({
+                        message: getErrorMessage(err)
+                    });
+                } else {
+                    res.status(200).json(student);
+                }
+        });
+    });
+};
+
+exports.listAddedCourses = function(req, res) {
+    const student = req.student;
+
+    Student.findById(student._id).populate('courses').exec((err, courses) => {
+        if (err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+            res.status(200).json(courses);
+        }
+    });
+}
