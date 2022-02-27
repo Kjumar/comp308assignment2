@@ -84,7 +84,7 @@ function ShowCourse(props) {
           <Button type="button" variant="primary" onClick={() => { editCourse(data._id) }}>Edit</Button>&nbsp;
           {screen !== 'auth'
             ?
-            <Button type="button" variant="primary" onClick={() => { addCourse(data._id) }}>Enrol</Button>
+            <Button type="button" variant="primary" onClick={() => { addCourse(data._id) }}>Enroll</Button>
             :
             <Button disabled type="button" variant="primary" onClick={() => { addCourse(data._id) }}>Enrol</Button>
           }&nbsp;
