@@ -216,7 +216,7 @@ exports.isSignedIn = (req, res) => {
 	}
   
 	// Finally, token is ok, return the username given in the token
-	res.status(200).send({ screen: payload.username });
+	res.status(200).send({ screen: payload.studentNumber });
 }
 //
 //isAuthenticated() method to check whether a user is currently authenticated

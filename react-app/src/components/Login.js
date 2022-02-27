@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 //import ReactDOM from 'react-dom';
 import { Form, Button, Container } from 'react-bootstrap';
 import axios from 'axios';
+import View from './View';
 //
 function App() {
   //state variable for the screen, admin or user
@@ -35,20 +36,17 @@ function App() {
     
   //check if the user already logged-in
   const readCookie = async () => {
-    try {
-      console.log('--- in readCookie function ---');
-
-      //
-      const res = await axios.get('/read_cookie');
-      // 
-      if (res.data.screen !== undefined) {
-        setScreen(res.data.screen);
-        console.log(res.data.screen);
-      }
-    } catch (e) {
-      setScreen('auth');
-      console.log(e);
-    }
+    axios.get('/read_cookie')
+      .then(result => {
+        //check if the user has logged in
+        if(result.data.screen !== 'auth')
+        {
+          setScreen(result.data.screen);
+        }
+      }).catch((error) => {
+        console.log(error);
+        setScreen('auth');
+      });
   };
   //runs the first time the view is rendered
   //to check if user is signed in
@@ -74,11 +72,7 @@ function App() {
           </Form>
           <button onClick={auth}>Login</button>
         </Container>
-        : <div>
-            <p>You are logged in!</p>
-            <p>this part should use a different component to render a page and display courses</p>
-            <p>for now, click Log In again to log out</p>
-          </div>
+        : <View screen={screen} setScreen={setScreen} />
       }
     </div>
   );

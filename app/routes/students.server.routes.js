@@ -28,6 +28,6 @@ module.exports = function (app) {
 
 
     //path to a protected page
-	//app.get('/welcome',students.welcome);
+	app.get('/welcome',students.welcome);
     
 };
