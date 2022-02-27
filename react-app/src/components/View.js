@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 function View (props) {
-    const { screen, setScreen } = props;
+    const { screen, setScreen, name, setName} = props;
     const [data, setData] = useState();
     const [course, setCourse] = useState('');
 
@@ -39,7 +39,7 @@ function View (props) {
         <div className="App">
         {course !== 'y'
             ? <div>
-                <p>{screen}</p>
+                <p>{name}</p>
                 <p>{data}</p>
                 <button onClick={verifyCookie}>Verify Cookie</button>
                 <button onClick={createCourse}>Create Course</button>

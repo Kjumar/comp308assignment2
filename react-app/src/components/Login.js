@@ -22,8 +22,6 @@ function App() {
       const loginData = { auth: { studentNumber, password } }
       //call api
       const res = await axios.post(apiUrl, loginData);
-      console.log(res.data.auth)
-      console.log(res.data.screen)
       //process the response
       if (res.data.screen !== undefined) {
         setScreen(res.data.screen);
@@ -74,7 +72,7 @@ function App() {
           </Form>
           <button onClick={auth}>Login</button>
         </Container>
-        : <View screen={name} setScreen={setName} />
+        : <View screen={screen} setScreen={setScreen} name={name} setName={setName} />
       }
     </div>
   );
