@@ -4,9 +4,9 @@ import { Form, Button, Container } from 'react-bootstrap';
 import axios from 'axios';
 import View from './View';
 //
-function App() {
+function App(props) {
   //state variable for the screen, admin or user
-  const [screen, setScreen] = useState('auth');
+  const { screen, setScreen } = props;
   //store input field data, student number and password
   const [studentNumber, setStudentNumber] = useState();
   const [password, setPassword] = useState();
@@ -33,27 +33,6 @@ function App() {
     }
   
   };
-    
-  //check if the user already logged-in
-  const readCookie = async () => {
-    axios.get('/read_cookie')
-      .then(result => {
-        //check if the user has logged in
-        if(result.data.screen !== 'auth')
-        {
-          setScreen(result.data.screen);
-        }
-      }).catch((error) => {
-        console.log(error);
-        setScreen('auth');
-      });
-  };
-  //runs the first time the view is rendered
-  //to check if user is signed in
-  useEffect(() => {
-    readCookie();
-  }, []); //only the first render
-  //
   return (
     <div className="App">
       {screen === 'auth' 
