@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 function ShowStudent(props) {
   const [data, setData] = useState({});
   const [showLoading, setShowLoading] = useState(true);
-  const apiUrl = "http://localhost:5000/users/" + props.match.params.id;
+  const apiUrl = "http://localhost:5000/students/" + props.match.params.id;
 
   useEffect(() => {
     setShowLoading(false);
@@ -14,6 +14,7 @@ function ShowStudent(props) {
       const result = await axios(apiUrl);
       setData(result.data);
       setShowLoading(false);
+      console.log(result.data);
     };
 
     fetchData();

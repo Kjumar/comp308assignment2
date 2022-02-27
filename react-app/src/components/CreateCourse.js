@@ -8,10 +8,10 @@ function CreateCourse(props) {
     //
     const firstName = props.screen;
     console.log('props.screen',props.screen)
-    const [course, setcourse] = useState({ _id: '', courseCode: '', courseName: '', section: 000 , semester: '', firstName: '' });
+    const [course, setcourse] = useState({ _id: '', courseCode: '', courseName: '', section: 0 , semester: '', firstName: '' });
     const [showLoading, setShowLoading] = useState(false);
     //
-    const apiUrl = "http://localhost:5000/api/courses"
+    const apiUrl = "http://localhost:3000/api/courses"
     //
     const savecourse = (e) => {
         setShowLoading(true);

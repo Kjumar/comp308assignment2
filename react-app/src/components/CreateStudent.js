@@ -7,7 +7,7 @@ function CreateStudent(props) {
   const [student, setStudent] = useState({ _id: '', firstName: '', lastName: '', 
                 address: '', city: '', phoneNumber: '', email: '',password: '' });
   const [showLoading, setShowLoading] = useState(false);
-  const apiUrl = "http://localhost:5000/";
+  const apiUrl = "http://localhost:3000/";
 
   const saveStudent = (e) => {
     setShowLoading(true);
@@ -35,11 +35,11 @@ function CreateStudent(props) {
         </Spinner> 
       } 
       <Container>
-      <h1 class="mt-3">Create New Student</h1>
+      <h1 className="mt-3">Create New Student</h1>
         <Form onSubmit={saveStudent}>
           <Form.Group className='mb-2'>
             <Form.Label>Student Number</Form.Label>
-            <Form.Control type="text" name="studentNumber" id="email" rows="3" placeholder="Enter student number" value={student.studentNumber} onChange={onChange} />
+            <Form.Control type="text" name="studentNumber" id="studentNumber" rows="3" placeholder="Enter student number" value={student.studentNumber} onChange={onChange} />
           </Form.Group>
           <Form.Group className='mb-2'>
             <Form.Label> First Name</Form.Label>
@@ -51,15 +51,15 @@ function CreateStudent(props) {
           </Form.Group >
           <Form.Group className='mb-2'> 
             <Form.Label>Address</Form.Label>
-            <Form.Control type="text" name="address" id="email" rows="3" placeholder="Enter address" value={student.address} onChange={onChange} />
+            <Form.Control type="text" name="address" id="address" rows="3" placeholder="Enter address" value={student.address} onChange={onChange} />
           </Form.Group>
           <Form.Group className='mb-2'>
             <Form.Label>City</Form.Label>
-            <Form.Control type="text" name="city" id="email" rows="3" placeholder="Enter city" value={student.city} onChange={onChange} />
+            <Form.Control type="text" name="city" id="city" rows="3" placeholder="Enter city" value={student.city} onChange={onChange} />
           </Form.Group>
           <Form.Group className='mb-2'> 
             <Form.Label>Phone Number</Form.Label>
-            <Form.Control type="text" name="phoneNumber" id="email" rows="3" placeholder="Enter phone number" value={student.phoneNumber} onChange={onChange} />
+            <Form.Control type="text" name="phoneNumber" id="phoneNumber" rows="3" placeholder="Enter phone number" value={student.phoneNumber} onChange={onChange} />
           </Form.Group>
           <Form.Group className='mb-2'>
             <Form.Label>Email</Form.Label>

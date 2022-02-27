@@ -7,7 +7,7 @@ function EditStudent(props) {
     const [student, setStudent] = useState({ _id: '', firstName: '', lastName: '', 
                 address: '', city: '', phoneNumber: '', email: '',password: '' });  
     const [showLoading, setShowLoading] = useState(true);
-    const apiUrl = "http://localhost:5000/students/" + props.match.params.id;
+    const apiUrl = "http://localhost:3000/students/" + props.match.params.id;
 
     //runs only once after the first render
     useEffect(() => {
@@ -51,10 +51,6 @@ function EditStudent(props) {
         <Jumbotron>
           <Form onSubmit={updateStudent}>
           <Form.Group>
-            <Form.Label>Student Number</Form.Label>
-            <Form.Control type="text" name="studentNumber" id="email" rows="3" placeholder="Enter student number" value={student.studentNumber} onChange={onChange} />
-          </Form.Group>
-          <Form.Group>
             <Form.Label> First Name</Form.Label>
             <Form.Control type="text" name="firstName" id="firstName" placeholder="Enter first name" value={student.firstName} onChange={onChange} />
           </Form.Group>
@@ -64,23 +60,19 @@ function EditStudent(props) {
           </Form.Group>
           <Form.Group>
             <Form.Label>Address</Form.Label>
-            <Form.Control type="text" name="address" id="email" rows="3" placeholder="Enter address" value={student.address} onChange={onChange} />
+            <Form.Control type="text" name="address" id="address" rows="3" placeholder="Enter address" value={student.address} onChange={onChange} />
           </Form.Group>
           <Form.Group>
             <Form.Label>City</Form.Label>
-            <Form.Control type="text" name="city" id="email" rows="3" placeholder="Enter city" value={student.city} onChange={onChange} />
+            <Form.Control type="text" name="city" id="city" rows="3" placeholder="Enter city" value={student.city} onChange={onChange} />
           </Form.Group>
           <Form.Group> 
             <Form.Label>Phone Number</Form.Label>
-            <Form.Control type="text" name="phoneNumber" id="email" rows="3" placeholder="Enter phone number" value={student.phoneNumber} onChange={onChange} />
+            <Form.Control type="text" name="phoneNumber" id="phoneNumber" rows="3" placeholder="Enter phone number" value={student.phoneNumber} onChange={onChange} />
           </Form.Group>
           <Form.Group>
             <Form.Label>Email</Form.Label>
             <Form.Control type="text" name="email" id="email" rows="3" placeholder="Enter email" value={student.email} onChange={onChange} />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" name="password" id="password" placeholder="Enter password" value={student.password} onChange={onChange} />
           </Form.Group>
           
           <Button variant="primary" type="submit">

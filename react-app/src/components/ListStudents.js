@@ -8,7 +8,7 @@ function ListStudents(props) {
   const [data, setData] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
   const [listError, setListError] = useState(false);
-  const apiUrl = "http://localhost:5000/users";
+  const apiUrl = "http://localhost:3000/students";
 
   useEffect(() => {
     const fetchData = async () => {
