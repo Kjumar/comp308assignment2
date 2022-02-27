@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import {Spinner, Jumbotron, Form, Button, Container} from 'react-bootstrap';
+import {Spinner, Form, Button, Container} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 
 function CreateStudent(props) {

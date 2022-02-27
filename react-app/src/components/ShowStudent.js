@@ -17,7 +17,7 @@ function ShowStudent(props) {
     };
 
     fetchData();
-  }, []);
+  }, [apiUrl]);
 
   const editStudent = (id) => {
     props.history.push({

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 //import ReactDOM from 'react-dom';
-import {Jumbotron, Form, Button, Container, FormGroup} from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 import axios from 'axios';
 //
 function App() {

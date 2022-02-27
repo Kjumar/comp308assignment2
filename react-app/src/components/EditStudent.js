@@ -21,7 +21,7 @@ function EditStudent(props) {
       };
   
       fetchData();
-    }, []);
+    }, [apiUrl]);
   
     const updateStudent = (e) => {
       setShowLoading(true);

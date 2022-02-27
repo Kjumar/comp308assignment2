@@ -20,7 +20,7 @@ function ShowCourse(props) {
     };
 
     fetchData();
-  }, []);
+  }, [apiUrl]);
 
   const editCourse = (id) => {
     props.history.push({
@@ -30,7 +30,7 @@ function ShowCourse(props) {
 
   const deleteCourse = (id) => {
     setShowLoading(true);
-    const course = { courseCode: course.courseCode, courseName: course.courseName, section: course.section, semester: course.semester };
+    const course = { courseCode: data.courseCode, courseName: data.courseName, section: data.section, semester: data.semester };
     //
     axios.delete(apiUrl, course)
       .then((result) => {
