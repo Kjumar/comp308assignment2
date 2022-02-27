@@ -42,8 +42,8 @@ function View (props) {
                 <p>{screen}</p>
                 <p>{data}</p>
                 <button onClick={verifyCookie}>Verify Cookie</button>
-                <button onClick={createCourse}>Create Article</button>
-                <button onClick={listCourses(data)}>List Articles</button>
+                <button onClick={createCourse}>Create Course</button>
+                <button onClick={listCourses(data)}>List Courses</button>
 
                 <button onClick={deleteCookie}>Log out</button>
             </div>            

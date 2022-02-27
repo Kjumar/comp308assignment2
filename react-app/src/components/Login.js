@@ -4,9 +4,10 @@ import { Form, Button, Container } from 'react-bootstrap';
 import axios from 'axios';
 import View from './View';
 //
-function App(props) {
+function App() {
   //state variable for the screen, admin or user
-  const { screen, setScreen } = props;
+  const [screen, setScreen] = useState('auth');
+  const [name, setName] = useState('');
   //store input field data, student number and password
   const [studentNumber, setStudentNumber] = useState();
   const [password, setPassword] = useState();
@@ -26,6 +27,7 @@ function App(props) {
       //process the response
       if (res.data.screen !== undefined) {
         setScreen(res.data.screen);
+        setName(res.data.name);
         console.log(res.data.screen);
       }
     } catch (e) { //print the error
@@ -33,6 +35,27 @@ function App(props) {
     }
   
   };
+  //check if the user already logged-in
+  const readCookie = async () => {
+    axios.get('/read_cookie')
+      .then(result => {
+        //check if the user has logged in
+        if(result.data.screen !== 'auth')
+        {
+          setScreen(result.data.screen);
+          setName(result.data.name);
+        }
+      }).catch((error) => {
+        console.log(error);
+        setScreen('auth');
+      });
+  };
+  //runs the first time the view is rendered
+  //to check if user is signed in
+  useEffect(() => {
+    readCookie();
+  }, []); //only the first render
+  //
   return (
     <div className="App">
       {screen === 'auth' 
@@ -51,7 +74,7 @@ function App(props) {
           </Form>
           <button onClick={auth}>Login</button>
         </Container>
-        : <View screen={screen} setScreen={setScreen} />
+        : <View screen={name} setScreen={setName} />
       }
     </div>
   );

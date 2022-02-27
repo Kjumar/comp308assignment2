@@ -51,9 +51,9 @@ exports.create = function (req, res, next) {
     });
 };
 //
-// Returns all users
+// Returns all students
 exports.list = function (req, res, next) {
-    // Use the 'User' instance's 'find' method to retrieve a new user document
+    // Use the 'Student' instance's 'find' method to retrieve a new user document
     Student.find({}, function (err, students) {
         if (err) {
             return next(err);
@@ -124,13 +124,14 @@ exports.authenticate = function(req, res, next) {
 			if(bcrypt.compareSync(password, student.password)) {
 				// Create a new token with the user id in the payload
   				// and which expires 300 seconds after issue
-				const token = jwt.sign({ id: student._id, studentNumber: student.studentNumber }, jwtKey, 
+				const token = jwt.sign({ id: student._id, studentNumber: student.studentNumber, firstName: student.firstName, lastName: student.lastName },
+					jwtKey, 
 					{algorithm: 'HS256', expiresIn: jwtExpirySeconds });
 				console.log('token:', token)
 				// set the cookie as the token string, with a similar max age as the token
 				// here, the max age is in milliseconds
 				res.cookie('token', token, { maxAge: jwtExpirySeconds * 1000,httpOnly: true});
-				res.status(200).send({ screen: student.studentNumber });
+				res.status(200).send({ screen: student.studentNumber, name: student.fullName });
 				//
 				//res.json({status:"success", message: "user found!!!", data:{user:
 				//user, token:token}});
@@ -216,7 +217,7 @@ exports.isSignedIn = (req, res) => {
 	}
   
 	// Finally, token is ok, return the username given in the token
-	res.status(200).send({ screen: payload.studentNumber });
+	res.status(200).send({ screen: payload.studentNumber, name: payload.name });
 }
 //
 //isAuthenticated() method to check whether a user is currently authenticated

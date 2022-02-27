@@ -44,19 +44,19 @@ function CreateCourse(props) {
             <Form onSubmit={savecourse}>
               <Form.Group>
                 <Form.Label> Course Code</Form.Label>
-                <Form.Control type="text" name="title" id="title" placeholder="Enter title" value={course.courseCode} onChange={onChange} />
+                <Form.Control type="text" name="courseCode" id="courseCode" placeholder="abcd123" value={course.courseCode} onChange={onChange} />
               </Form.Group>
               <Form.Group>
                 <Form.Label> Course Name</Form.Label>
-                <Form.Control as="textarea" rows="3" name="content" id="content" placeholder="Enter Content" value={course.courseName} onChange={onChange} />
+                <Form.Control type="text" name="courseName" id="courseName" placeholder="enter course name" value={course.courseName} onChange={onChange} />
               </Form.Group>
               <Form.Group>
                 <Form.Label> Section</Form.Label>
-                <Form.Control as="textarea" rows="3" name="content" id="content" placeholder="Enter Content" value={course.section} onChange={onChange} />
+                <Form.Control type="text" name="section" id="section" placeholder="001" value={course.section} onChange={onChange} />
               </Form.Group>
               <Form.Group>
                 <Form.Label> Semester</Form.Label>
-                <Form.Control as="textarea" rows="3" name="content" id="content" placeholder="Enter Content" value={course.semester} onChange={onChange} />
+                <Form.Control type="text" name="semester" id="semester" placeholder="W22" value={course.semester} onChange={onChange} />
               </Form.Group>
                             
               <Button variant="primary" type="submit">

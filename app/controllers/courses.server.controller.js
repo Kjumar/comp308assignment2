@@ -28,13 +28,13 @@ exports.create = function(req, res) {
                 message: getErrorMessage(err)
             });
         } else {
-            res.status(200).json(article);
+            res.status(200).json(course);
         }
     });
 };
 
 exports.list = function(req, res) {
-    Course.find().sort('courseCode').exec((err, courses) => {
+    Course.find().sort({courseCode: 'asc', semester: 'asc', section: 'asc'}).exec((err, courses) => {
         if (err) {
             return res.status(400).send({
                 message: getErrorMessage(err)
