@@ -13,6 +13,10 @@ const getErrorMessage = function(err) {
     }
 };
 
+// =================================
+//      Courses CRUD operations
+// =================================
+
 exports.create = function(req, res) {
     const course = new Course();
     course.courseName = req.body.courseName;
@@ -58,6 +62,7 @@ exports.courseById = function(req, res, next, id) {
     });
 };
 
+// echos the course back as a json response
 exports.read = function(req, res) {
     res.status(200).json(req.course);
 };
@@ -105,6 +110,11 @@ exports.delete = function (req, res) {
     });
 };
 
+// =================================================================
+//      advanced operations using the Student.courses property
+// =================================================================
+
+// adds a course to the given student's 'courses' list
 exports.addCourse = function(req, res) {
     const course = req.body.course;
     const student = req.body.student;
@@ -131,6 +141,7 @@ exports.addCourse = function(req, res) {
     });
 };
 
+// list courses added to the student's courses list
 exports.listAddedCourses = function(req, res) {
     const studentNumber = req.body.studentNumber;
 
@@ -145,6 +156,22 @@ exports.listAddedCourses = function(req, res) {
     });
 }
 
+// list students that are enrolled in a given course
+exports.listStudentsInCourse = function(req, res) {
+    const course = req.body.course;
+
+    Student.find({ courses: course._id }).exec((err, students) => {
+        if (err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+            res.status(200).json(students);
+        }
+    });
+}
+
+// removes a course from the student's courses list
 exports.removeCourse = function(req, res) {
     const courseId = req.body.courseId;
     const studentNumber = req.body.studentNumber;
@@ -156,9 +183,9 @@ exports.removeCourse = function(req, res) {
                 message: getErrorMessage(err)
             });
         }
-        console.log(student.courses);
         const newCourses = student.courses.filter( (course) => course._id != courseId);
-        console.log(newCourses);
+        /* NOTE: since we're populating before filtering, this has the added effect of removing
+            courses that no longer exist from the courses list. Free housekeeping! */
 
         Student.findOneAndUpdate({studentNumber: studentNumber},
             {courses: newCourses}, (err, student) => {

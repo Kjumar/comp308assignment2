@@ -17,6 +17,9 @@ module.exports = function(app) {
     app.route('/api/listcourses')
         .put(students.requiresLogin, courses.listAddedCourses)
     //
+    app.route('/api/listcourses/:courseId')
+        .get(students.requiresLogin, courses.listStudentsInCourse)
+    //
     app.route('/api/removecourse')
         .put(students.requiresLogin, courses.removeCourse);
     //

@@ -32,13 +32,17 @@ const getErrorMessage = function(err) {
 	return message;
 };
 
+// ==================================
+// 		Student CRUD operations
+// ==================================
+
 // Register new student
 exports.create = function (req, res, next) {
-    // Create a new instance of the 'User' Mongoose model
+    // Create a new instance of the 'Student' Mongoose model
     var student = new Student(req.body); //get data from React form
     console.log("body: " + req.body.studentNumber);
 
-    // Use the 'User' instance's 'save' method to save a new user document
+    // Use the 'Student' instance's 'save' method to save a new student document
     student.save(function (err) {
         if (err) {
             // Call the next middleware with an error message
@@ -63,15 +67,15 @@ exports.list = function (req, res, next) {
     });
 };
 //
-//'read' controller method to display a user
+//'read' controller method to display a student
 exports.read = function(req, res) {
 	// Use the 'response' object to send a JSON response
 	res.json(req.student);
 };
 //
-// 'userByID' controller method to find a user by its id
+// 'userByID' controller method to find a student by its id
 exports.studentByID = function (req, res, next, id) {
-	// Use the 'User' static 'findOne' method to retrieve a specific user
+	// Use the 'Student' static 'findOne' method to retrieve a specific student
 	Student.findOne({
         _id: id
 	}, (err, student) => {
@@ -105,16 +109,17 @@ exports.delete = function(req, res, next) {
       res.json(student);
     });
 };
-//
+
+// ========================
+// 		Authentication
+// ========================
+
 // authenticates a student
 exports.authenticate = function(req, res, next) {
 	// Get credentials from request
-	console.log(req.body)
 	const studentNumber = req.body.auth.studentNumber;
 	const password  = req.body.auth.password;
-	console.log(password)
-	console.log(studentNumber)
-	//find the user with given username using static method findOne
+	//find the student with given studentNumber using static method findOne
 	Student.findOne({studentNumber: studentNumber}, (err, student) => {
 			if (err) {
 				return next(err);
@@ -122,19 +127,15 @@ exports.authenticate = function(req, res, next) {
 			console.log(student)
 			//compare passwords	
 			if(bcrypt.compareSync(password, student.password)) {
-				// Create a new token with the user id in the payload
+				// Create a new token with the student id in the payload
   				// and which expires 300 seconds after issue
 				const token = jwt.sign({ id: student._id, studentNumber: student.studentNumber, firstName: student.firstName, lastName: student.lastName },
 					jwtKey, 
 					{algorithm: 'HS256', expiresIn: jwtExpirySeconds });
-				console.log('token:', token)
 				// set the cookie as the token string, with a similar max age as the token
 				// here, the max age is in milliseconds
 				res.cookie('token', token, { maxAge: jwtExpirySeconds * 1000,httpOnly: true});
 				res.status(200).send({ screen: student.studentNumber, name: student.fullName });
-				//
-				//res.json({status:"success", message: "user found!!!", data:{user:
-				//user, token:token}});
 				
 				req.student=student;
 				//call the next middleware
@@ -176,7 +177,7 @@ exports.welcome = (req, res) => {
 	  return res.status(400).end()
 	}
   
-	// Finally, return the welcome message to the user, along with their
+	// Finally, return the welcome message to the student, along with their
 	// username given in the token
 	// use back-quotes here
 	res.send(`${payload.studentNumber}`)
@@ -190,7 +191,7 @@ exports.signout = (req, res) => {
 	// Redirect the user back to the main application page
 	//res.redirect('/');
 }
-//check if the user is signed in
+//check if the student is signed in
 exports.isSignedIn = (req, res) => {
 	// Obtain the session token from the requests cookies,
 	// which come with every request
@@ -216,11 +217,11 @@ exports.isSignedIn = (req, res) => {
 	  return res.status(400).end()
 	}
   
-	// Finally, token is ok, return the username given in the token
+	// Finally, token is ok, return the studentNumber and name given in the token
 	res.status(200).send({ screen: payload.studentNumber, name: payload.name });
 }
 //
-//isAuthenticated() method to check whether a user is currently authenticated
+//isAuthenticated() method to check whether a student is currently authenticated
 exports.requiresLogin = function (req, res, next) {
     // Obtain the session token from the requests cookies,
 	// which come with every request
