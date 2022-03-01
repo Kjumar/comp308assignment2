@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {Spinner, Jumbotron, Form, Button} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { withRouter } from 'react-router-dom';
 import React, { useState } from 'react';
 
@@ -34,13 +35,13 @@ function CreateCourse(props) {
     
     return (
         <div>
-        <h2> Create a course {firstName} </h2>
-        {showLoading && 
-            <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-            </Spinner> 
-        } 
-        <Jumbotron>
+          <Jumbotron>
+            <h2> Create a course {firstName} </h2>
+            {showLoading && 
+                <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+                </Spinner> 
+            } 
             <Form onSubmit={savecourse}>
               <Form.Group>
                 <Form.Label> Course Code</Form.Label>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 //import ReactDOM from 'react-dom';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Jumbotron } from 'react-bootstrap';
 import axios from 'axios';
 import View from './View';
 //
@@ -59,7 +59,7 @@ function App() {
     <div className="App">
       {screen === 'auth' 
         ?
-        <Container>
+        <Jumbotron>
           <Form>
           <h1 className="mt-3">Please Log In</h1>
             <Form.Group className='mb-3'>
@@ -71,8 +71,8 @@ function App() {
                 <Form.Control type="password" onChange={e => setPassword(e.target.value)}/>
             </Form.Group>
           </Form>
-          <button onClick={auth}>Login</button>
-        </Container>
+          <Button onClick={auth}>Login</Button>
+        </Jumbotron>
         : <View screen={screen} setScreen={setScreen} name={name} setName={setName} />
       }
     </div>

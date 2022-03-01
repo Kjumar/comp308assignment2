@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {Spinner, Jumbotron, Button} from 'react-bootstrap';
+import {Spinner, Jumbotron, Button, ListGroup} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 
 function ShowCourse(props) {
@@ -8,6 +8,7 @@ function ShowCourse(props) {
   const [screen, setScreen] = useState('auth');
   const [data, setData] = useState({});
   const [showLoading, setShowLoading] = useState(true);
+  const [students, setStudents] = useState([]);
   const apiUrl = "http://localhost:3000/api/courses/" + props.match.params.id;
 
   //check if the user already logged-in
@@ -64,11 +65,35 @@ function ShowCourse(props) {
 
     axios.put('/api/addcourse', {course: course, student: student})
       .then((result) => {
-        setShowLoading(true);
+        setShowLoading(false);
         props.history.push('/courses');
       }).catch((err) => {
         setShowLoading(false);
       });
+  }
+
+  // List Students based upon matching courses
+  const showEnrolledStudents = (id) => {
+    setShowLoading(true);
+    axios.get('/api/listcourses/' + id)
+      .then((result) => {
+        setShowLoading(false);
+        if (result.data) {
+          setStudents(result.data);
+        }
+        else {
+          setStudents([]);
+        }
+      }).catch((error) => {
+        setShowLoading(false);
+        console.log(error);
+      })
+  }
+
+  const showStudent = (id) => {
+    props.history.push({
+      pathname: '/students/' + id
+    });
   }
 
   return (
@@ -78,18 +103,41 @@ function ShowCourse(props) {
       </Spinner> }    
       <Jumbotron>
         <h1>Course Name: {data.courseName}</h1>
+        <h2>Course Code: {data.courseCode}</h2>
         <p>Section: {data.section}</p>
+        <p>Semester: {data.semester}</p>
 
         <p>
           <Button type="button" variant="primary" onClick={() => { editCourse(data._id) }}>Edit</Button>&nbsp;
           {screen !== 'auth'
             ?
+            <Button type="button" variant="primary" onClick={() => { showEnrolledStudents(data._id) }}>View Classlist</Button>
+            :
+            null
+          }&nbsp;
+          {screen !== 'auth'
+            ?
             <Button type="button" variant="primary" onClick={() => { addCourse(data._id) }}>Enroll</Button>
             :
-            <Button disabled type="button" variant="primary" onClick={() => { addCourse(data._id) }}>Enroll</Button>
+            null
           }&nbsp;
           <Button type="button" variant="danger" onClick={() => { deleteCourse(data._id) }}>Delete</Button>
         </p>
+
+        {students.length !== 0
+                    ?
+                    <Jumbotron>
+                        <ListGroup>
+                            {students.map((item, idx) => (
+                            <ListGroup.Item key={idx} action onClick={() => { showStudent(item._id) }}>
+                                {item.fullName}
+                            </ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                    </Jumbotron>
+                    :
+                    null
+                }
         
       </Jumbotron>
     </div>

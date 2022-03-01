@@ -1,13 +1,15 @@
 import CreateCourse from './CreateCourse';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {ListGroup, Spinner} from 'react-bootstrap';
+import {ListGroup, Spinner, Jumbotron, Button, ButtonGroup, ToggleButton} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function View (props) {
     const { screen, setScreen, name, setName} = props;
     const [data, setData] = useState();
     const [course, setCourse] = useState('');
     const [courses, setCourses] = useState([]);
+    const [deleteMode, setDeleteMode] = useState(false);
 
     const deleteCookie = async () => {
         try {
@@ -49,13 +51,16 @@ function View (props) {
     };
 
     const showCourseDetail = (id) => {
-        axios.put('/api/removecourse', {courseId: id, studentNumber: data})
-            .then(result => {
-                console.log(result.data);
-                listCourses(screen);
-            }).catch((error) => {
-                console.log(error);
-            });
+        if (deleteMode)
+        {
+            axios.put('/api/removecourse', {courseId: id, studentNumber: data})
+                .then(result => {
+                    console.log(result.data);
+                    listCourses(screen);
+                }).catch((error) => {
+                    console.log(error);
+                });
+        }
     };
 
     useEffect(() => {
@@ -65,30 +70,43 @@ function View (props) {
     return (
         <div className="App">
         {course !== 'y'
-            ? <div>
+            ? <Jumbotron className="text-center">
                 <p>{name}</p>
                 <p>{data}</p>
-                <button onClick={verifyCookie}>Verify Cookie</button>
-                <button onClick={createCourse}>Create Course</button>
-                <button onClick={() => listCourses(data)}>List Courses</button>
+                <Button variant="primary" onClick={verifyCookie}>Verify Cookie</Button>{' '}
+                <Button variant="primary" onClick={createCourse}>Create Course</Button>{' '}
+                <Button variant="primary" onClick={() => listCourses(data)}>List Courses</Button>{' '}
 
-                <button onClick={deleteCookie}>Log out</button>
+                <Button variant="info" onClick={deleteCookie}>Log out</Button>
 
                 {courses.length !== 0
                     ?
-                    <ListGroup>
-                        {courses.map((item, idx) => (
-                        <ListGroup.Item key={idx} action onClick={() => { showCourseDetail(item._id) }}>
-                            {item.courseCode} - {item.courseName} - {item.semester} - Sec. {item.section}
-                        </ListGroup.Item>
-                        ))}
-                    </ListGroup>
+                    <Jumbotron>
+                        <ButtonGroup toggle className="mb-2">
+                            <ToggleButton
+                            type="checkbox"
+                            variant="outline-danger"
+                            checked={deleteMode}
+                            value="1"
+                            onChange={(e) => setDeleteMode(e.currentTarget.checked)}
+                            >
+                            Drop Courses
+                            </ToggleButton>
+                        </ButtonGroup>
+                        <ListGroup>
+                            {courses.map((item, idx) => (
+                            <ListGroup.Item key={idx} action onClick={() => { showCourseDetail(item._id) }}>
+                                {item.courseCode} - {item.courseName} - {item.semester} - Sec. {item.section}
+                            </ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                    </Jumbotron>
                     :
                     <div>
                         <p>no courses to show</p>
                     </div>
                 }
-            </div>            
+            </Jumbotron>            
             : <CreateCourse screen={screen} setScreen={setScreen} />
         }
         </div>

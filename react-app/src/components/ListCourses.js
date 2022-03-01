@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {ListGroup, Spinner} from 'react-bootstrap';
+import {ListGroup, Spinner, Jumbotron} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import Login from './Login';
 
@@ -38,7 +38,7 @@ function ListCourses(props) {
   return (
     <div>
       { data.length !== 0
-        ? <div>
+        ? <Jumbotron>
           {showLoading && <Spinner animation="border" role="status">
             <span className="sr-only">Loading...</span>
           </Spinner> }
@@ -49,7 +49,7 @@ function ListCourses(props) {
               </ListGroup.Item>
             ))}
           </ListGroup>
-        </div>
+        </Jumbotron>
         : < Login />
       }
     </div>

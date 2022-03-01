@@ -158,7 +158,7 @@ exports.listAddedCourses = function(req, res) {
 
 // list students that are enrolled in a given course
 exports.listStudentsInCourse = function(req, res) {
-    const course = req.body.course;
+    const course = req.course;
 
     Student.find({ courses: course._id }).exec((err, students) => {
         if (err) {
