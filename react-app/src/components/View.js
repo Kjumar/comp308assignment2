@@ -31,7 +31,7 @@ function View (props) {
     };
 
     const listCourses = (studentNumber) => {
-        console.log('in listCourses: ', studentNumber);
+        console.log('in listCourses: ', screen);
         if (screen !== 'auth' && screen !== undefined)
         {
             axios.put('/api/listcourses', { studentNumber: screen})
