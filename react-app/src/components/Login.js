@@ -55,6 +55,11 @@ function App() {
     readCookie();
   }, []); //only the first render
   //
+
+  const getName = () => {
+    return screen;
+  }
+
   return (
     <div className="App">
       {screen === 'auth' 
@@ -73,7 +78,7 @@ function App() {
           </Form>
           <Button onClick={auth}>Login</Button>
         </Jumbotron>
-        : <View screen={screen} setScreen={setScreen} name={name} setName={setName} />
+        : <View getScreen={screen} setScreen={setScreen} name={name} setName={setName} />
       }
     </div>
   );

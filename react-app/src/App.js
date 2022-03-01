@@ -16,6 +16,7 @@ import EditStudent from './components/EditStudent';
 //
 import ShowCourse from './components/ShowCourse';
 import ListCourses from './components/ListCourses';
+import EditCourse from './components/EditCourse';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState('auth');
@@ -68,6 +69,7 @@ function App() {
         <Route render ={()=> < ShowStudent />} path="/show/:id" />
         <Route render ={()=> < EditStudent />} path="/edit/:id" />
         <Route render ={()=> < ShowCourse />} path="/showcourse/:id" />
+        <Route render ={()=> < EditCourse />} path="/editcourse/:id" />
       </div>
     </Router>
   );

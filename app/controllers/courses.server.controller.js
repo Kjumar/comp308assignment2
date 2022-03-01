@@ -81,19 +81,13 @@ exports.listSections = function(req, res) {
 
 exports.update = function(req, res) {
     const course = req.course;
-    course.courseCode = req.courseCode;
-    course.courseName = req.courseName;
-    course.section = req.section;
-    course.semester = req.semester;
 
-    course.save((err) => {
+    Course.findByIdAndUpdate(course._id, req.body, function (err, course) {
         if (err) {
-            return res.status(400).send({
-                message: getErrorMessage(err)
-            });
-        } else {
-            res.status(200).json(course);
+          console.log(err);
+          return next(err);
         }
+        res.json(course);
     });
 };
 
